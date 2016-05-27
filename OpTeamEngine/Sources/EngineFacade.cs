@@ -12,7 +12,7 @@ using OpTeamEngine.HandlersPrototypes;
 using OpTeamEngine.Messages;
 using OpTeamEngine.MainClasses;
 
-namespace OpTeamEngine.src
+namespace OpTeamEngine.Sources
 {
     class EngineFacade: IEngine
     {

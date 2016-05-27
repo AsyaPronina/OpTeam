@@ -8,7 +8,7 @@ using System.Xml.Serialization;
 
 using OpTeamEngine.Messages;
 
-namespace OpTeamEngine.src
+namespace OpTeamEngine.Sources
 {
     class MessageToXmlConverter
     {

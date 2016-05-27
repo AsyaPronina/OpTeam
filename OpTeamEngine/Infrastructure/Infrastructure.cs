@@ -7,7 +7,7 @@ using System.Xml.Serialization;
 
 using OpTeamEngine.Interfaces;
 using OpTeamEngine.Messages;
-using OpTeamEngine.src;
+using OpTeamEngine.Sources;
 using OpTeamEngine.HandlersPrototypes;
 
 namespace OpTeamEngine.Infrastructure

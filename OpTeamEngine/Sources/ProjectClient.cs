@@ -7,7 +7,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.IO;
 
-namespace OpTeamEngine.src
+namespace OpTeamEngine.Sources
 {
     delegate void ResponseHandler(MemoryStream message);
 
