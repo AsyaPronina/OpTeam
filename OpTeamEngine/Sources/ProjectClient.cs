@@ -58,15 +58,24 @@ namespace OpTeamEngine.Sources
                 byte[] msg = request.GetBuffer();
 
                 int bytesSent = sender.Send(msg);
-                int bytesRec = sender.Receive(bytes);
 
-                sender.Shutdown(SocketShutdown.Both);
-                sender.Close();
+                var aReceive = new Func<byte[], int>(sender.Receive);
+                aReceive.BeginInvoke(bytes, () =>
+                {
+                    int result = aReceive.EndInvoke(c);
+                    if (result == -1)
+                    {
+                        Console.WriteLine("Smth bad with returned result");
+                    }
 
-                Console.WriteLine(Encoding.UTF8.GetString(bytes, 0, bytesRec));
+                    sender.Shutdown(SocketShutdown.Both);
+                    sender.Close();
 
-                MemoryStream response = new MemoryStream(bytes, 0, bytes.Length, true, true);
-                responseQueue.Enqueue(response);
+                    Console.WriteLine(Encoding.UTF8.GetString(bytes, 0, result));
+
+                    MemoryStream response = new MemoryStream(bytes, 0, result, true, true);
+                    responseQueue.Enqueue(response);
+                }, null);               
             }
         }
 
