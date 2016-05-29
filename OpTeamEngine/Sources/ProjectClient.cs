@@ -60,7 +60,7 @@ namespace OpTeamEngine.Sources
                 int bytesSent = sender.Send(msg);
 
                 var aReceive = new Func<byte[], int>(sender.Receive);
-                aReceive.BeginInvoke(bytes, () =>
+                aReceive.BeginInvoke(bytes, (c) =>
                 {
                     int result = aReceive.EndInvoke(c);
                     if (result == -1)

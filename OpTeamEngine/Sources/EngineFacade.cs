@@ -45,18 +45,6 @@ namespace OpTeamEngine.Sources
             }
         }
 
-        public void ProcessProjectServerResponse(MemoryStream xmlResponse)
-        {
-            Console.WriteLine("Engine: ProcessProjectServerResponse");
-
-            AuthorizeUserResponse response = (AuthorizeUserResponse)XMLConverter.Deserialize(xmlResponse);
-
-            Console.WriteLine("Message ID: {0}, response ID: {1}, UserName: {2}, Status: {3}", response.ID, response.responseID,
-                response.UserName, response.Status);
-
-            UserAuthorized();
-        }
-
         #region Methods API for UI
         public void RegisterUser(string name, string password)
         {
@@ -132,10 +120,50 @@ namespace OpTeamEngine.Sources
         public event EventHandler MailSent;
         #endregion 
 
-        EngineFacade() { }
+        public void ProcessProjectServerResponse(MemoryStream xmlResponse)
+        {
+            Console.WriteLine("Engine: ProcessProjectServerResponse");
+
+            BaseMessage response = XMLConverter.Deserialize(xmlResponse);
+            messageToHandler[response.ID](response);
+
+        }
+
+        EngineFacade() 
+        {
+            messageToHandler.Add(new AuthorizeUserResponse().ID, ProcessAuthorizeUserResponse);
+            BaseMessage.counter = 0;
+        }
+
+        #region ProjectServer response handlers
+        delegate void ProcessResponse(BaseMessage response);
+
+        void ProcessRegisterUserResponse(BaseMessage response) { }
+
+        void ProcessAuthorizeUserResponse(BaseMessage response)
+        {
+            AuthorizeUserResponse authResponse = response as AuthorizeUserResponse;
+            Console.WriteLine("Message ID: {0}, response ID: {1}, UserName: {2}, Status: {3}", authResponse.ID, authResponse.responseID,
+            authResponse.UserName, authResponse.Status);
+            UserAuthorized();
+        }
+
+        void ProcessUpdateProjectResponse(BaseMessage response) { }
+
+        void ProcessDeleteProjectResponse(BaseMessage response) { }
+
+        void ProcessGetAllProjectsResponse(BaseMessage response) { }
+
+        void ProcessUpdateTopicResponse(BaseMessage response) { }
+
+        void ProcessGetAllTopicsResponse(BaseMessage response) { }
+
+        void ProcessGetAllParticipantsResponse(BaseMessage response) { }
+        #endregion
 
         static readonly EngineFacade instance = new EngineFacade();
         MessageToXmlConverter xmlConverter = new MessageToXmlConverter();
         ProjectClient client;
+        Dictionary<string, ProcessResponse> messageToHandler = new Dictionary<string, ProcessResponse>();
     }
 }
