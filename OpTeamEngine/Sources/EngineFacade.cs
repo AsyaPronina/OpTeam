@@ -47,16 +47,12 @@ namespace OpTeamEngine.Sources
 
         public void ProcessProjectServerResponse(MemoryStream message)
         {
-            Console.WriteLine("Response received");
+            Console.WriteLine("Engine: ProcessProjectServerResponse");
 
-            if (message == null)
-            {
-                Console.WriteLine("Something wrong with server response");
-            }
-            else
-            {
-                Console.WriteLine(Encoding.UTF8.GetString(message.ToArray()));
-            }
+            AuthorizeUserResponse response = (AuthorizeUserResponse)XMLConverter.Deserialize(message);
+
+            Console.WriteLine("Message ID: {0}, response ID: {1}, UserName: {2}, Status: {3}", response.ID, response.responseID,
+                response.UserName, response.Status);
         }
 
         #region Methods API for UI
@@ -67,7 +63,7 @@ namespace OpTeamEngine.Sources
 
         public void AuthorizeUser(string name, string password)
         {
-            Console.WriteLine("Engine: RegisterUser");
+            Console.WriteLine("Engine: AuthorizeUser");
             new Thread(() =>
             {
                 AuthorizeUserRequest request = new AuthorizeUserRequest();
@@ -75,7 +71,6 @@ namespace OpTeamEngine.Sources
                 request.Password = password;
 
                 MemoryStream xmlMessage = XMLConverter.Serialize(request);
-
                 ProjectClient.SendMessage(xmlMessage);
             }).Start();
         }

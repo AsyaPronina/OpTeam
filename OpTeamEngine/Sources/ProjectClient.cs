@@ -23,7 +23,7 @@ namespace OpTeamEngine.Sources
         public void SendMessage(MemoryStream message)
         {
             Console.WriteLine("Trying to send message...");
-            Console.WriteLine(Encoding.UTF8.GetString(message.ToArray()));
+            Console.WriteLine(Encoding.UTF8.GetString(message.GetBuffer()));
 
             byte[] bytes = new byte[1024];
 
@@ -42,29 +42,14 @@ namespace OpTeamEngine.Sources
             byte[] msg = message.GetBuffer();
 
             int bytesSent = sender.Send(msg);
+            int bytesRec = sender.Receive(bytes);
 
-            //asynchronous wait for response
-            var aReceive = new Func<byte[], int>(sender.Receive);
-            //FIX THIS BAD CODE ASAP
-            aReceive.BeginInvoke(bytes, (aR) =>
-            {
-                int result = aReceive.EndInvoke(aR);
-                if (result == -1)
-                {
-                    Console.WriteLine("Smth bad with returned result");
-                }
+            sender.Shutdown(SocketShutdown.Both);
+            sender.Close();
 
-                var client = aR.AsyncState as ProjectClient;
-                client.ReceiveMessage(new MemoryStream(bytes));
+            Console.WriteLine(Encoding.UTF8.GetString(bytes, 0, bytesRec));
 
-                sender.Shutdown(SocketShutdown.Both);
-                sender.Close();
-            }, this);
-        }
-
-        public void ReceiveMessage(MemoryStream message)
-        {
-            ResponseReceived(message);
+            ResponseReceived(new MemoryStream(bytes, 0, bytes.Length, true, true));
         }
 
         public event ResponseHandler ResponseReceived;
