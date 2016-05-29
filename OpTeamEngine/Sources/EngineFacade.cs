@@ -45,14 +45,16 @@ namespace OpTeamEngine.Sources
             }
         }
 
-        public void ProcessProjectServerResponse(MemoryStream message)
+        public void ProcessProjectServerResponse(MemoryStream xmlResponse)
         {
             Console.WriteLine("Engine: ProcessProjectServerResponse");
 
-            AuthorizeUserResponse response = (AuthorizeUserResponse)XMLConverter.Deserialize(message);
+            AuthorizeUserResponse response = (AuthorizeUserResponse)XMLConverter.Deserialize(xmlResponse);
 
             Console.WriteLine("Message ID: {0}, response ID: {1}, UserName: {2}, Status: {3}", response.ID, response.responseID,
                 response.UserName, response.Status);
+
+            UserAuthorized();
         }
 
         #region Methods API for UI
@@ -64,15 +66,11 @@ namespace OpTeamEngine.Sources
         public void AuthorizeUser(string name, string password)
         {
             Console.WriteLine("Engine: AuthorizeUser");
-            new Thread(() =>
-            {
-                AuthorizeUserRequest request = new AuthorizeUserRequest();
-                request.UserName = name;
-                request.Password = password;
-
-                MemoryStream xmlMessage = XMLConverter.Serialize(request);
-                ProjectClient.SendMessage(xmlMessage);
-            }).Start();
+            AuthorizeUserRequest request = new AuthorizeUserRequest();
+            request.UserName = name;
+            request.Password = password;
+            MemoryStream xmlMessage = XMLConverter.Serialize(request);
+            ProjectClient.SendRequest(xmlMessage);
         }
 
         public void UpdateProject(Project project)
@@ -134,7 +132,7 @@ namespace OpTeamEngine.Sources
         public event EventHandler MailSent;
         #endregion 
 
-        EngineFacade() {}
+        EngineFacade() { }
 
         static readonly EngineFacade instance = new EngineFacade();
         MessageToXmlConverter xmlConverter = new MessageToXmlConverter();

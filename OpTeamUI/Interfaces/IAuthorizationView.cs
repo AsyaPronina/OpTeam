@@ -11,8 +11,9 @@ namespace OpTeamUI.Interfaces
         string User { get; set; }
         string Password { get; set; }
 
-        event EventHandler SignedIn;
+        event EventHandler AuthorizationRequested;
 
         void ShowError(string message);
+        void Update(string userName, string password);
     }
 }

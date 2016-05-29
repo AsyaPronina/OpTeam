@@ -14,6 +14,8 @@ namespace OpTeamUI
 {
     public partial class AutorizationView : Form, IAuthorizationView
     {
+        public delegate void UpdateCallBack(string userName, string password);
+
         public AutorizationView()
         {
             InitializeComponent();
@@ -43,11 +45,24 @@ namespace OpTeamUI
             }
         }
 
-        public event EventHandler SignedIn;
+        public event EventHandler AuthorizationRequested;
 
         public void ShowError(string message)
         {
             MessageBox.Show(message);
+        }
+
+        public void Update(string userName, string password)
+        {
+            if (textBox1.InvokeRequired && textBox2.InvokeRequired)
+            {
+                this.Invoke(new UpdateCallBack(Update), new object[] {"Yeah!!!!", "You are authorized"});
+            }
+            else
+            {
+                textBox1.Text = userName;
+                textBox2.Text = password;
+            }
         }
 
         private string user;
@@ -61,7 +76,7 @@ namespace OpTeamUI
                 User = textBox1.Text;
                 Password = textBox2.Text;
 
-                SignedIn(sender, e);
+                AuthorizationRequested(sender, e);
             }
         }
     }

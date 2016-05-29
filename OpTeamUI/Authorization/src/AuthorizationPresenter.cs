@@ -16,12 +16,19 @@ namespace OpTeamUI
         public AuthorizationPresenter(IAuthorizationView view)
         {
             this.view = view;
-            this.view.SignedIn += OnUserSignedIn;
+            this.view.AuthorizationRequested += OnAuthorizationRequested;
+
+            this.model.UserAuthorized += OnUserAuthorized;
         }
 
-        public void OnUserSignedIn(object sender, EventArgs e)
+        public void OnAuthorizationRequested(object sender, EventArgs e)
         {
             model.AuthorizeUser(view.User, view.Password);
+        }
+
+        public void OnUserAuthorized()
+        {
+            view.Update("Yeah!", "You are authorized!");
         }
 
         private IEngine model = Infrastructure.Instance.GetEngine();

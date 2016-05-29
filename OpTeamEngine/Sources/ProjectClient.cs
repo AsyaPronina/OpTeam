@@ -6,57 +6,86 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Net.Sockets;
 using System.IO;
+using System.Collections.Concurrent;
+
+using OpTeamEngine.Messages;
 
 namespace OpTeamEngine.Sources
 {
-    delegate void ResponseHandler(MemoryStream message);
-
     class ProjectClient
     {
+        public delegate void ResponseHandler(MemoryStream response);
+        public event ResponseHandler ResponseReceived = null;
+
         public ProjectClient(IPAddress ip, int port)
         {
             this.ip = ip;
             this.port = port;
             ipEndPoint = new IPEndPoint(ip, port);
+            new Task(StartPerformTransactionCycle).Start();
+            new Task(StartRouteResponseCycle).Start();
         }
 
-        public void SendMessage(MemoryStream message)
+        public void SendRequest(MemoryStream request)
         {
-            Console.WriteLine("Trying to send message...");
-            Console.WriteLine(Encoding.UTF8.GetString(message.GetBuffer()));
-
-            byte[] bytes = new byte[1024];
-
-            Socket sender = new Socket(ip.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-
-            try
-            {
-                sender.Connect(this.ipEndPoint);
-            }
-            catch
-            {
-                Console.WriteLine("Connection failed");
-                return;
-            }
-
-            byte[] msg = message.GetBuffer();
-
-            int bytesSent = sender.Send(msg);
-            int bytesRec = sender.Receive(bytes);
-
-            sender.Shutdown(SocketShutdown.Both);
-            sender.Close();
-
-            Console.WriteLine(Encoding.UTF8.GetString(bytes, 0, bytesRec));
-
-            ResponseReceived(new MemoryStream(bytes, 0, bytes.Length, true, true));
+            requestQueue.Enqueue(request);
         }
 
-        public event ResponseHandler ResponseReceived;
+        void StartPerformTransactionCycle()
+        {
+            while (true)
+            {
+                MemoryStream request = null;
+                while (!requestQueue.TryDequeue(out request)) ;
+                    
+                Console.WriteLine("Trying to send request...");
+                Console.WriteLine(Encoding.UTF8.GetString(request.GetBuffer()));
+
+                byte[] bytes = new byte[1024];
+
+                Socket sender = new Socket(ip.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+
+                try
+                {
+                    sender.Connect(this.ipEndPoint);
+                }
+                catch
+                {
+                    Console.WriteLine("Connection failed");
+                    continue;
+                }
+
+                byte[] msg = request.GetBuffer();
+
+                int bytesSent = sender.Send(msg);
+                int bytesRec = sender.Receive(bytes);
+
+                sender.Shutdown(SocketShutdown.Both);
+                sender.Close();
+
+                Console.WriteLine(Encoding.UTF8.GetString(bytes, 0, bytesRec));
+
+                MemoryStream response = new MemoryStream(bytes, 0, bytes.Length, true, true);
+                responseQueue.Enqueue(response);
+            }
+        }
+
+        void StartRouteResponseCycle()
+        {
+            while (true)
+            {
+                MemoryStream xmlResponse = null;
+                while (!responseQueue.TryDequeue(out xmlResponse)) ;
+
+                ResponseReceived(xmlResponse);
+            }
+        }
 
         int port;
         IPAddress ip;
         IPEndPoint ipEndPoint;
+        ConcurrentQueue<MemoryStream> requestQueue = new ConcurrentQueue<MemoryStream>();
+        ConcurrentQueue<MemoryStream> responseQueue = new ConcurrentQueue<MemoryStream>();
     }
 }
 
