@@ -24,8 +24,6 @@ namespace OpTeamUI
             model.AuthorizeUser(view.User, view.Password);
         }
 
-        static public int value = 4;
-        static private AuthorizationPresenter backUP = new AuthorizationPresenter(new AutorizationView());
         private IEngine model = Infrastructure.Instance.GetEngine();
         private IAuthorizationView view;
     }
