@@ -49,6 +49,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DirectorProjectView\Test\DirectorProjectViewTest.cs" />
+    <Compile Include="ManagerProjectView\Src\ManagerProjectView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ManagerProjectView\Src\ManagerProjectView.Designer.cs">
+      <DependentUpon>ManagerProjectView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ManagerProjectView\Src\ManagerProjectViewPresenter.cs" />
+    <Compile Include="ManagerProjectView\Test\ManagerProjectViewTest.cs" />
+    <Compile Include="ParticipantProjectView\Src\ParticipantProjectView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ParticipantProjectView\Src\ParticipantProjectView.Designer.cs">
+      <DependentUpon>ParticipantProjectView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ParticipantProjectView\Src\ParticipantProjectViewPresenter.cs" />
+    <Compile Include="DirectorProjectView\Src\DirectorProjectView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DirectorProjectView\Src\DirectorProjectView.Designer.cs">
+      <DependentUpon>DirectorProjectView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DirectorProjectView\Src\DirectorProjectViewPresenter.cs" />
     <Compile Include="Interfaces\IAuthorizationView.cs" />
     <Compile Include="Interfaces\IProjectView.cs" />
     <Compile Include="Interfaces\IView.cs" />
@@ -60,6 +83,7 @@
       <DependentUpon>AutorizationView.cs</DependentUpon>
     </Compile>
     <Compile Include="Authorization\test\AuthorizationPresenterTest.cs" />
+    <Compile Include="ParticipantProjectView\Test\ParticipantProjectViewTest.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="ProjectView\Src\ProjectPresenter.cs" />
     <Compile Include="ProjectView\Src\ProjectView.cs">
@@ -70,8 +94,25 @@
     </Compile>
     <Compile Include="ProjectView\Test\ProjectPresenterTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RegistrationView\Src\RegistrationPresenter.cs" />
+    <Compile Include="RegistrationView\Src\RegistrationView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RegistrationView\Src\RegistrationView.Designer.cs">
+      <DependentUpon>RegistrationView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RegistrationView\Test\RegistrationViewTest.cs" />
     <EmbeddedResource Include="Authorization\src\AutorizationView.resx">
       <DependentUpon>AutorizationView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ManagerProjectView\Src\ManagerProjectView.resx">
+      <DependentUpon>ManagerProjectView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ParticipantProjectView\Src\ParticipantProjectView.resx">
+      <DependentUpon>ParticipantProjectView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DirectorProjectView\Src\DirectorProjectView.resx">
+      <DependentUpon>DirectorProjectView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ProjectView\Src\ProjectView.resx">
       <DependentUpon>ProjectView.cs</DependentUpon>
@@ -85,6 +126,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="RegistrationView\Src\RegistrationView.resx">
+      <DependentUpon>RegistrationView.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

@@ -13,3 +13,7 @@ F:\OPTeamUI\OpTeam\OpTeamUI\bin\Debug\OpTeamEngine.pdb
 F:\OPTeamUI\OpTeam\OpTeamUI\obj\Debug\OpTeamUI.exe
 F:\OPTeamUI\OpTeam\OpTeamUI\obj\Debug\OpTeamUI.pdb
 F:\OPTeamUI\OpTeam\OpTeamUI\obj\Debug\OpTeamUI.ProjectView.Src.ProjectView.resources
+F:\OPTeamUI\OpTeam\OpTeamUI\obj\Debug\OpTeamUI.DirectorProjectView.DirectorProjectView.resources
+F:\OPTeamUI\OpTeam\OpTeamUI\obj\Debug\OpTeamUI.DirectorProjectView.ParticipantProjectView.resources
+F:\OPTeamUI\OpTeam\OpTeamUI\obj\Debug\OpTeamUI.ManagerProjectView.ManagerProjectView.resources
+F:\OPTeamUI\OpTeam\OpTeamUI\obj\Debug\OpTeamUI.RegistrationView.RegistrationView.resources
