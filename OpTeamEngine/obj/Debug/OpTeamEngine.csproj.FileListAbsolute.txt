@@ -1,0 +1,4 @@
+F:\OPTeamUI\OpTeam\OpTeamEngine\bin\Debug\OpTeamEngine.dll
+F:\OPTeamUI\OpTeam\OpTeamEngine\bin\Debug\OpTeamEngine.pdb
+F:\OPTeamUI\OpTeam\OpTeamEngine\obj\Debug\OpTeamEngine.dll
+F:\OPTeamUI\OpTeam\OpTeamEngine\obj\Debug\OpTeamEngine.pdb

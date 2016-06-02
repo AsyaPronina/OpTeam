@@ -1,0 +1,15 @@
+F:\OPTeamUI\OpTeam\OpTeamUI\bin\Debug\OpTeamUI.exe.config
+F:\OPTeamUI\OpTeam\OpTeamUI\obj\Debug\OpTeamUI.csprojResolveAssemblyReference.cache
+F:\OPTeamUI\OpTeam\OpTeamUI\obj\Debug\OpTeamUI.AutorizationView.resources
+F:\OPTeamUI\OpTeam\OpTeamUI\obj\Debug\OpTeamUI.Properties.Resources.resources
+F:\OPTeamUI\OpTeam\OpTeamUI\obj\Debug\OpTeamUI.csproj.GenerateResource.Cache
+F:\OPTeamUI\OpTeam\OpTeamUI\bin\Debug\OpTeamUI.exe
+F:\OPTeamUI\OpTeam\OpTeamUI\bin\Debug\OpTeamUI.pdb
+F:\OPTeamUI\OpTeam\OpTeamUI\bin\Debug\nunit.framework.dll
+F:\OPTeamUI\OpTeam\OpTeamUI\bin\Debug\nunitlite.dll
+F:\OPTeamUI\OpTeam\OpTeamUI\bin\Debug\OpTeamEngine.dll
+F:\OPTeamUI\OpTeam\OpTeamUI\bin\Debug\nunit.framework.xml
+F:\OPTeamUI\OpTeam\OpTeamUI\bin\Debug\OpTeamEngine.pdb
+F:\OPTeamUI\OpTeam\OpTeamUI\obj\Debug\OpTeamUI.exe
+F:\OPTeamUI\OpTeam\OpTeamUI\obj\Debug\OpTeamUI.pdb
+F:\OPTeamUI\OpTeam\OpTeamUI\obj\Debug\OpTeamUI.ProjectView.Src.ProjectView.resources
