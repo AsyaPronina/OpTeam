@@ -1,0 +1,8 @@
+Two ways of creating connections:
+Server:
+1. Create passive listen socket. Create new communication socket on each new transaction on server and close it after transaction is completed. Store map of clients and IPs.
+2. Create passive listen socket. Create new communication socket on each new connection from different client. Hold one socket per client active.
+Client:
+1. Create new active socket on each transaction operation, send request, receive response from this socket and close it.
+2. Create one socket to server. Negotiate with server.
+
